@@ -7,11 +7,11 @@ import { TextureLoader, RepeatWrapping } from "three";
 import React from "react";
 import { useNavigate } from "react-router";
 
-
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-// import MainAppComponent from "./MainApp";
+import MainApp from "./components/MainApp";
 import Home from "./Live-House/index";
+import NotFound from "./components/NotFound";
 
 const theme = createTheme({
   palette: {
@@ -27,12 +27,13 @@ const theme = createTheme({
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Router>
+      <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainApp />} />
           <Route path="/home" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
@@ -85,27 +86,6 @@ function SunsetBackground() {
       <sphereGeometry args={[1, 32, 32]} />
       <meshBasicMaterial map={sunsetTexture} side={2} />
     </mesh>
-  );
-}
-
-function MainApp() {
-  const navigate = useNavigate();
-  return (
-    <>
-      <div id="canvas-container">
-        <Canvas>
-          <SunsetBackground />
-          <Box position={[-1.6, 0, 0]} />
-          <Box position={[1.6, 0, 0]} />
-          <ambientLight intensity={0.5} />
-          <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-          <pointLight position={[-10, -10, -10]} />
-        </Canvas>
-      </div>
-      <h1>Three.js Fiber</h1>
-      <a href="">もっとみる</a>
-      <button onClick={() => navigate("/some-path")}>Navigate</button>
-    </>
   );
 }
 
